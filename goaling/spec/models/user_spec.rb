@@ -16,15 +16,14 @@ RSpec.describe User, type: :model do
 
   describe 'class methods' do
     context '::find_by_credentials' do
-      before(:each) do
-        user = FactoryBot.build(:user).save!
-      end
       it 'should return correct user with valid params' do
+        user = FactoryBot.create(:user)
         expect(User.find_by_credentials(user.username, user.password)).to eq(user)
       end
       it 'should return nil with invalid params' do
-        user = FactoryBot.build(:user, password: '')
-        expect(User.find_by_credentials(user.username, user.password)).to eq(user)
+        FactoryBot.create(:user)
+        baduser = FactoryBot.build(:user, password: '')
+        expect(User.find_by_credentials(baduser.username, baduser.password)).to eq(nil)
       end
     end
   end
